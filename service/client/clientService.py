@@ -1,7 +1,7 @@
 import uuid
 from model.client.client import Client
 from store import MemoryStore
-from model.account import Account
+from model import Account
 from service.exception import ClientNotFoundException
 from projection import ClientProjection
 import json
@@ -21,6 +21,8 @@ class ClientService(object):
     def get_client(self, clientID):
         try:
             client = MemoryStore.store[uuid.UUID(clientID)]
+            if not isinstance(client, Client):
+                raise ClientNotFoundException(clientID)
             client_accounts = self.get_accounts(clientID)            
         except KeyError:
             raise ClientNotFoundException(clientID)

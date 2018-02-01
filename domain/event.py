@@ -1,5 +1,5 @@
 class Event(object):
-    def __init__(self, compositeUUID, timestamp, version):
-        self.compositeUUID = compositeUUID
+    def __init__(self, compositeID, timestamp, sequence):
+        self.compositeID = compositeID
         self.timestamp = timestamp
-        self.version = version
+        self.sequence = sequence

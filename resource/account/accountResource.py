@@ -1,5 +1,4 @@
 from flask_restful import Resource, reqparse
-from service.account.accountService import AccountService
 from flask import url_for, jsonify
 from model.account.account import Account
 from service.account import AccountService
@@ -29,7 +28,10 @@ class AccountResource(Resource):
 
     def post(self):
         data = parser.parse_args()
-        account = account_service.proccess_new_account(data.get('clientID'))
+        try:
+            account = account_service.proccess_new_account(data.get('clientID'))
+        except Exception:
+            return {'Message' : 'An error ocurred'}, 404
         return url_for('account', id=account.id), 201
         
 

@@ -8,4 +8,4 @@ class Client(Composite):
         self.id = iden
         self.name = name
         self.email = email
-        self.events.append(JoinedClientEvent(iden, datetime.datetime.utcnow(), 1, name, email))
+        self.events.append(JoinedClientEvent(iden, datetime.datetime.utcnow(), self.get_sequence(), name, email))

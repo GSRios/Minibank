@@ -1,3 +1,5 @@
+from store import MemoryStore
+
 class Composite(object):
     def __init__(self, id, events):
         self.id = id
@@ -5,5 +7,5 @@ class Composite(object):
 
     #Need to implement a lamport timestamp or vector clock
     def get_sequence(self):
-        #t = max(t, len(self.events))+1
-        return len(self.events) +1
+        MemoryStore.lamport_timestamp = max(MemoryStore.lamport_timestamp, len(self.events))+1
+        return MemoryStore.lamport_timestamp

@@ -1,7 +1,7 @@
 import uuid
 from model.client.client import Client
 from store import MemoryStore
-from model.account.transactionEvent import AccountOpenedEvent
+from model.account import Account
 from service.exception import ClientNotFoundException
 from projection import ClientProjection
 import json
@@ -29,6 +29,6 @@ class ClientService(object):
     def get_accounts(self, clientID):
         accounts = []
         for key, account in MemoryStore.store.iteritems():
-            if isinstance(account, AccountOpenedEvent) and account.clientUUID == uuid.UUID(clientID):
-                accounts.append(account.compositeUUID)
+            if isinstance(account, Account) and account.clientID == uuid.UUID(clientID):
+                accounts.append(account.id)
         return accounts

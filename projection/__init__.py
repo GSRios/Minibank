@@ -1,2 +1,2 @@
 from accountProjection import AccountProjection
-#from clientProjection import ClientProjection
+from clientProjection import ClientProjection

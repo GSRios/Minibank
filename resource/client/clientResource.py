@@ -1,7 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask import request, url_for, jsonify
 from service.client.clientService import ClientService
-#from projection import ClientProjection
+from projection import ClientProjection
 
 class ClientResource(Resource):
     global c_service
@@ -19,9 +19,10 @@ class ClientResource(Resource):
         help="This field cannot be empty"
     )   
     def get(self, id):        
-        #client_projection = ClientProjection(id)
-        #return jsonify(client_projection.projection)
-        pass
+        client, client_accounts = c_service.get_client(id)
+        client_projection = ClientProjection(client, client_accounts)
+        return jsonify(client_projection.projection)
+        
    
     def post(self):        
         command = parser.parse_args()       

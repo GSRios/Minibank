@@ -12,6 +12,5 @@ class WithdrawEvent(Event):
 
 
 class AccountOpenedEvent(Event):
-    def __init__(self, trackID, timestamp, sequence, clientUUID):
-        super(AccountOpenedEvent, self).__init__(trackID, timestamp, sequence)
-        self.clientID = clientUUID        
+    def __init__(self, trackID, timestamp, sequence):
+        super(AccountOpenedEvent, self).__init__(trackID, timestamp, sequence)   

@@ -24,10 +24,8 @@ class ClientService(object):
             if not isinstance(client, Client):
                 raise ClientNotFoundException(clientID)
             client_accounts = self.get_accounts(clientID)            
-        except KeyError:
-            raise ClientNotFoundException(clientID)
-        except ValueError:
-            raise ClientNotFoundException(clientID)
+        except (KeyError, ValueError):
+            raise ClientNotFoundException(clientID)       
         return client, client_accounts
     
     def get_accounts(self, clientID):

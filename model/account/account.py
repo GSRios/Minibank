@@ -7,7 +7,7 @@ class Account(Composite):
     def __init__(self, accountID, clientID, account_events=[]):
         super(Account, self).__init__(accountID, account_events)         
         self.clientID = clientID          
-        self.events.append(AccountOpenedEvent(accountID, datetime.datetime.utcnow(), self.get_sequence(), clientID))
+        self.events.append(AccountOpenedEvent(accountID, datetime.datetime.utcnow(), self.get_sequence()))
         
 
     def deposit(self, amount):

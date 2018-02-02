@@ -6,20 +6,19 @@ from service import AccountNotFoundException
 from projection.accountProjection import AccountProjection
 
 class AccountResource(Resource):
-    global parser
-    parser = reqparse.RequestParser()
-    parser.add_argument('clientID',
-        type=str,
-        required=True,
-        help="This field cannot be empty"
-    )
-
-    global account_service
-    account_service = AccountService()
+    def __init__(self):
+        super(AccountResource, self).__init__()
+        self.__service = AccountService()
+        self.__parser = reqparse.RequestParser()
+        self.__parser.add_argument('clientID',
+            type=str,
+            required=True,
+            help="This field cannot be empty"
+        ) 
 
     def get(self, id):
         try:            
-            account = account_service.get_account(id)
+            account = self.__service.get_account(id)
             account_projection = AccountProjection(account)
         except AccountNotFoundException as account_not_found:
             return {'Message': str(account_not_found)}, 404
@@ -27,9 +26,9 @@ class AccountResource(Resource):
         return jsonify(account_projection.projection)
 
     def post(self):
-        data = parser.parse_args()
+        data = self.__parser.parse_args()
         try:
-            account = account_service.proccess_new_account(data.get('clientID'))
+            account = self.__service.proccess_new_account(data.get('clientID'))
         except Exception:
             return {'Message' : 'An error ocurred'}, 404
         return url_for('account', id=account.id), 201

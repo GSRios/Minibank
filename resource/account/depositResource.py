@@ -7,20 +7,22 @@ from service import AccountNotFoundException
 
 class DepositAccountResource(Resource):
     
-    global parser
-    parser = reqparse.RequestParser()
-    parser.add_argument('amount',
-        type=float,
-        required=True,
-        help='This field cannot be empty'
-    )
+    def __init__(self):
+        super(DepositAccountResource, self).__init__()
+        self.__service = AccountService()
+        self.__parser = reqparse.RequestParser()
+        self.__parser.add_argument('amount',
+            type=float,
+            required=True,
+            help='This field cannot be empty'
+        ) 
+    
 
     def post(self, accountID):
-        data = parser.parse_args()
+        data = self.__parser.parse_args()
         amount = data['amount']
-        account_service = AccountService()
         try:
-            account = account_service.proccess_deposit(amount, accountID)
+            self.__service.proccess_deposit(amount, accountID)
         except AccountNotFoundException as account_not_found:
             return {'Message': str(account_not_found)}, 404    
         return {"Message":"Transaction completed with success"}

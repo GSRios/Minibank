@@ -7,22 +7,41 @@ import smtplib
 from datetime import datetime
 
 class AccountService(object):
-    
+    """This class represent the services to account """
     def __init__(self):
         pass
    
     def proccess_new_account(self, clientID):
+        """
+            Method to create a new account
+
+            Parameters
+            -----------            
+            clientID : str UUID
+        """
         account = Account(uuid.uuid4(), uuid.UUID(clientID))
         #self.send_email(account)
         self.store_account(account)
         return account
       
     def get_account(self, accountID):
+        """
+            Method to get an account
+
+            Parameters
+            -----------
+            accountID : str UUID
+
+            Returns
+            --------
+            account
+                an instance of Account
+        """
         try:
             account = MemoryStore.store[uuid.UUID(accountID)]
             if not isinstance(account, Account):
                 raise AccountNotFoundException(accountID)
-        except KeyError:
+        except (KeyError, ValueError):
             raise AccountNotFoundException(accountID)                       
         return account 
 

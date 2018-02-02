@@ -16,8 +16,14 @@ class ClientTest(unittest.TestCase):
         self.account = account_service.proccess_new_account(str(self.client.id))
         self.response = self.app.get('/account/{}'.format(self.account.id))
 
-    def test_get_account(self):                
-        self.assertEqual(200, self.response.status_code)      
+    def test_get_account(self): 
+        """Method to test get an account"""
+        self.assertEqual(200, self.response.status_code)
+
+    def test_get_account_not_found(self): 
+        """Method to test get an account not existing"""               
+        response = self.app.get('/account/{}'.format('inexisting_account'))      
+        self.assertEqual(404, response.status_code)   
 
     def test_post_account(self):       
         response = self.app.post('/account',

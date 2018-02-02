@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask import request, url_for, jsonify
-from service.client.clientService import ClientService
+from service.client import ClientService
+from service import ClientNotFoundException
 from projection import ClientProjection
 
 class ClientResource(Resource):
@@ -18,9 +19,12 @@ class ClientResource(Resource):
         required=True,
         help="This field cannot be empty"
     )   
-    def get(self, id):        
-        client, client_accounts = c_service.get_client(id)
-        client_projection = ClientProjection(client, client_accounts)
+    def get(self, id):
+        try:        
+            client, client_accounts = c_service.get_client(id)
+            client_projection = ClientProjection(client, client_accounts)
+        except (KeyError, ClientNotFoundException) as ex:
+            return {'Message': str(ex)}, 404
         return jsonify(client_projection.projection)
         
    

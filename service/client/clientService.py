@@ -26,6 +26,8 @@ class ClientService(object):
             client_accounts = self.get_accounts(clientID)            
         except KeyError:
             raise ClientNotFoundException(clientID)
+        except ValueError:
+            raise ClientNotFoundException(clientID)
         return client, client_accounts
     
     def get_accounts(self, clientID):

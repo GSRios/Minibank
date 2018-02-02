@@ -31,7 +31,14 @@ class ClientTest(unittest.TestCase):
             data=dict(
                 clientID='inexisting_client'
             ),follow_redirects=True )            
-        self.assertEqual(404, response.status_code)           
+        self.assertEqual(404, response.status_code)   
+
+    def test_withdraw(self):
+        pass
+
+    def test_deposit(self):
+        pass
+
  
 if __name__ == '__main__':
     unittest.main()

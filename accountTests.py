@@ -33,11 +33,28 @@ class ClientTest(unittest.TestCase):
             ),follow_redirects=True )            
         self.assertEqual(404, response.status_code)   
 
+    def test_withdraw_without_balance(self):
+        response = self.app.post('/account/{}/withdraw'.format(str(self.account.id)),
+            data=dict(amount= 10000.00)
+        , follow_redirects=True)
+        self.assertEqual(403, response.status_code)
+
     def test_withdraw(self):
-        pass
+        self.test_deposit()
+        response = self.app.post('/account/{}/withdraw'.format(str(self.account.id)),
+            data=dict(amount= 1000.00)
+        , follow_redirects=True)
+        self.assertEqual(200, response.status_code)
 
     def test_deposit(self):
-        pass
+        response = self.app.post('/account/{}/deposit'.format(str(self.account.id)),
+            data=dict(amount= 1000.00)
+        , follow_redirects=True)
+        self.assertEqual(200, response.status_code)
+
+    def test_transactions(self):
+        response = self.app.get('/account/{}/history'.format(str(self.account.id)))        
+        self.assertEqual(200, response.status_code)
 
  
 if __name__ == '__main__':

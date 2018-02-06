@@ -1,8 +1,7 @@
 from flask_restful import Resource, reqparse
 from flask import url_for, jsonify
 from model.account.account import Account
-from service.account import AccountService
-from service import AccountNotFoundException
+from service import AccountNotFoundException, AccountService
 from projection.accountProjection import AccountProjection
 
 class AccountResource(Resource):

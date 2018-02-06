@@ -5,20 +5,21 @@ from service import ClientNotFoundException
 from projection import ClientProjection
 
 class ClientResource(Resource):
-    global c_service
-    c_service = ClientService() 
-    global parser
-    parser = reqparse.RequestParser()
-    parser.add_argument('name',
-        type=str,
-        required=True,
-        help="This field cannot be empty"
-    )
-    parser.add_argument('email',
-        type=str,
-        required=True,
-        help="This field cannot be empty"
-    )   
+    def __init__(self):
+        super(ClientResource, self).__init__()        
+        self.__service = ClientService()        
+        self.__parser = reqparse.RequestParser()
+        self.__parser.add_argument('name',
+            type=str,
+            required=True,
+            help="This field cannot be empty"
+        )
+        self.__parser.add_argument('email',
+            type=str,
+            required=True,
+            help="This field cannot be empty"
+        )   
+
     def get(self, id):
         try:        
             client, client_accounts = c_service.get_client(id)

@@ -7,14 +7,14 @@ class Account(Composite):
     def __init__(self, accountID, clientID, account_events=[]):
         super(Account, self).__init__(accountID, account_events)         
         self.clientID = clientID          
-        self.events.append(AccountOpenedEvent(accountID, datetime.datetime.utcnow(), self.get_sequence()))
+        self._events.append(AccountOpenedEvent(accountID, datetime.datetime.utcnow(), self.get_sequence()))
         
 
     def deposit(self, amount):
-        self.events.append(DepositEvent (self.id, datetime.datetime.utcnow(), self.get_sequence(), amount))
+        self._events.append(DepositEvent (self._id, datetime.datetime.utcnow(), self.get_sequence(), amount))
        
     def withdraw(self, amount):        
-        self.events.append(WithdrawEvent(self.id, datetime.datetime.utcnow(), self.get_sequence(), amount*-1))
+        self._events.append(WithdrawEvent(self._id, datetime.datetime.utcnow(), self.get_sequence(), amount*-1))
 
     def sent_email(self, sent_at):
-        self.events.append(DispatcherEmailEvent(self.id, self.get_sequence, sent_at))
+        self._events.append(DispatcherEmailEvent(self._id, self.get_sequence, sent_at))

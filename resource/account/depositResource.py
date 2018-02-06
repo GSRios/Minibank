@@ -17,7 +17,6 @@ class DepositAccountResource(Resource):
             help='This field cannot be empty'
         ) 
     
-
     def post(self, accountID):
         data = self.__parser.parse_args()
         amount = data['amount']

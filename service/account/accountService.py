@@ -82,6 +82,6 @@ class AccountService(object):
             smtp_server.sendmail(user, to, msg)
             smtp_server.close()
         except Exception as error:
-            raise Exception(str(error))
+            raise Exception(error)
 
         return timestamp

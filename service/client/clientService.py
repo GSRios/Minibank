@@ -16,7 +16,8 @@ class ClientService(object):
         return client
     
     def store_client(self, client):
-        MemoryStore.store[client.id] = client        
+        #MemoryStore.store[client.id] = client        
+        pass
   
     def get_client(self, clientID):
         try:

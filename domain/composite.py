@@ -1,7 +1,7 @@
 from store import MemoryStore
 
-    def __init__(self, id, events):
 class Composite(object):
+    def __init__(self, id, events):
         self._id = id
         self._events = events
 

@@ -1,8 +1,4 @@
-from resource.account.accountResource import AccountResource
-from resource.client.clientResource import ClientResource
-from resource.account.depositResource import DepositAccountResource
-from resource.account.withdrawResource import WithdrawAccountResource
-from resource.account.transactionResource import TransactionResource
+from resource import DepositAccountResource, WithdrawAccountResource, TransactionResource, AccountResource, ClientResource
 from flask import Flask
 from flask_restful import Resource, Api
 
@@ -18,5 +14,14 @@ api.add_resource(DepositAccountResource, '/account/<string:accountID>/deposit')
 api.add_resource(WithdrawAccountResource, '/account/<string:accountID>/withdraw')
 api.add_resource(TransactionResource, '/account/<string:accountID>/history')
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:Ab123456@localhost/minibank'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+@app.before_first_request
+def create_tables():
+    _db.create_all
+
 if __name__ == '__main__':
+    from store.database import _db
+    _db.init_app(app)
     app.run(port=5000)

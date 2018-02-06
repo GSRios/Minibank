@@ -1,2 +1,5 @@
 from account.accountResource import AccountResource
 from client.clientResource import ClientResource
+from account.withdrawResource import WithdrawAccountResource
+from account.depositResource import DepositAccountResource
+from account.transactionResource import TransactionResource

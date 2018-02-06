@@ -22,7 +22,7 @@ class ClientResource(Resource):
 
     def get(self, id):
         try:        
-            client, client_accounts = c_service.get_client(id)
+            client, client_accounts = self.__service.get_client(id)
             client_projection = ClientProjection(client, client_accounts)
         except (KeyError, ClientNotFoundException) as ex:
             return {'Message': str(ex)}, 404
@@ -30,7 +30,7 @@ class ClientResource(Resource):
         
    
     def post(self):        
-        command = parser.parse_args()       
-        client = c_service.process_new_client(command)      
-        return url_for('client', id=client.id), 201
+        command = self.__parser.parse_args()       
+        client = self.__service.process_new_client(command)      
+        return url_for('client', id=client._id), 201
         

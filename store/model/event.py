@@ -1,6 +1,5 @@
-from store import Connection
 
-class EventDAO(Connection):
+class EventModel(Connection):
     def __init__(self):
         super(EventDAO, self).__init__()
 

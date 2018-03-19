@@ -1,6 +1,8 @@
 import uuid
 from model.client.client import Client
 from store import MemoryStore
+from store import ClientModel
+from store import EventModel
 from model import Account
 from service.exception import ClientNotFoundException
 from projection import ClientProjection
@@ -11,8 +13,12 @@ class ClientService(object):
         pass
 
     def process_new_client(self, command):       
-        client = Client(uuid.uuid4(), command['name'], command['email'])        
-        self.store_client(client)              
+        client = Client(uuid.uuid4(), **command)        
+        model_client = ClientModel(client._id, client._name, client._email)
+        model_client.save()
+        for event in client._events:
+            event_model = EventModel(event._composite_id, event._timestamp, event._sequence, type(event).__name__)
+            event_model.save()
         return client
     
     def store_client(self, client):
@@ -21,13 +27,14 @@ class ClientService(object):
   
     def get_client(self, clientID):
         try:
-            client = MemoryStore.store[uuid.UUID(clientID)]
-            if not isinstance(client, Client):
-                raise ClientNotFoundException(clientID)
-            client_accounts = self.get_accounts(clientID)            
+            #client = MemoryStore.store[uuid.UUID(clientID)]
+            #if not isinstance(client, Client):
+            #    raise ClientNotFoundException(clientID)
+            #client_accounts = self.get_accounts(clientID)
+            client = ClientModel.get(uuid.UUID(clientID))
         except (KeyError, ValueError):
             raise ClientNotFoundException(clientID)       
-        return client, client_accounts
+        return client
     
     def get_accounts(self, clientID):
         accounts = []

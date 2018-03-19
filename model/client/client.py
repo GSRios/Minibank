@@ -5,6 +5,7 @@ import datetime
 class Client(Composite):
     def __init__(self, iden, name, email):
         super(Client, self).__init__(iden, [])
-        self.__name = name
-        self.__email = email
-        self._events.append(JoinedClientEvent(iden, datetime.datetime.utcnow(), self.get_sequence()))
+        self._name = name
+        self._email = email
+        new_client_event = JoinedClientEvent(iden, datetime.datetime.utcnow(), self.get_sequence())
+        self._events.append(new_client_event)

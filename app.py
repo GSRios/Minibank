@@ -20,7 +20,7 @@ api.add_resource(DepositAccountResource, '/account/<string:accountID>/deposit')
 api.add_resource(WithdrawAccountResource, '/account/<string:accountID>/withdraw')
 api.add_resource(TransactionResource, '/account/<string:accountID>/history')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://user:pass@localhost/minibank'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:za3o5p4r@localhost/minibank'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
@@ -29,7 +29,6 @@ def create_tables():
     _db.create_all()
    
 
-if __name__ == '__main__':
-  
+if __name__ == '__main__':  
     _db.init_app(app)
     app.run(port=5000)

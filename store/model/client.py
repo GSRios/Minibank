@@ -13,11 +13,11 @@ class ClientModel(_db.Model):
     
     accounts = _db.relationship('AccountModel', lazy='dynamic')
 
-    
-    def __init__(self, id, name, email):
-        self.id = id
-        self.name = name
-        self.email = email
+
+    def __init__(self, client):
+        self.id = client._id
+        self.name = client._name
+        self.email = client._email
 
     def save(self):        
         _db.session.add(self)

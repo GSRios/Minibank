@@ -1,2 +1,4 @@
 from account import Account
-from transactionEvent import AccountOpenedEvent, WithdrawEvent, DepositEvent
+from transactionEvent import AccountOpenedEvent
+from transactionEvent import WithdrawEvent
+from transactionEvent import DepositEvent

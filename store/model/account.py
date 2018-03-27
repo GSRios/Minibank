@@ -12,9 +12,9 @@ class AccountModel(_db.Model):
     client = _db.relationship('ClientModel')
     
     
-    def __init__(self, id, client_id):
-       self.id = id
-       self.client_id = client_id
+    def __init__(self, account):     
+       self.id = account._id
+       self.client_id = account.clientID
 
     def save(self):
         _db.session.add(self)

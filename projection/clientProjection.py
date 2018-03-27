@@ -1,10 +1,10 @@
 
 class ClientProjection(object):
-    def __init__(self, client, client_accounts=[]):        
+    def __init__(self, client):        
         projection = {
-            'clientID' : client.id,
+            'client_id' : client.id,
             'name' : client.name,
             'email' : client.email,
-            'accounts' : client_accounts
+            'accounts' : [account.id for account in client.accounts.all()]
         }
         self.projection = projection

@@ -1,3 +1,5 @@
 from account.accountService import AccountService
 from client.clientService import ClientService
-from exception import AccountNotFoundException, ClientNotFoundException
+from event.eventService import EventService
+from exception import AccountNotFoundException
+from exception import ClientNotFoundException

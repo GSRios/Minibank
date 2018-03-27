@@ -23,7 +23,7 @@ class ClientResource(Resource):
     def get(self, id):
         try:        
             client = self.__service.get_client(id)
-            client_projection = ClientProjection(client, [])
+            client_projection = ClientProjection(client)
         except (KeyError, ClientNotFoundException) as ex:
             return {'Message': str(ex)}, 404
         return jsonify(client_projection.projection)

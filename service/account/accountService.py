@@ -4,6 +4,7 @@ from projection import AccountProjection
 from service.exception import AccountNotFoundException
 from store import MemoryStore
 from store import AccountModel
+from store import EventModel
 import smtplib
 from datetime import datetime
 
@@ -22,9 +23,9 @@ class AccountService(object):
         """
         account = Account(uuid.uuid4(), uuid.UUID(clientID))
         #self.send_email(account)
-        account_model = AccountModel(account._id, account.clientID)
+        account_model = AccountModel(account)
         account_model.save()
-        #self.store_account(account)
+        EventModel.save(account._events)
         return account
       
     def get_account(self, account_id):
@@ -45,6 +46,8 @@ class AccountService(object):
             #if not isinstance(account, Account):
             #    raise AccountNotFoundException(accountID)
             account = AccountModel.get(account_id)
+            if not account:
+                aise AccountNotFoundException(account_id)
         except (KeyError, ValueError):
             raise AccountNotFoundException(account_id)                       
         return account 

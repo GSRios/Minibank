@@ -20,7 +20,7 @@ class EventModel(_db.Model):
         self.track_id = event._composite_id
         self.timestamp = event._timestamp
         self.sequence = event._sequence
-        self.type_event = type(event).__name__
+        self.type = type(event).__name__
         if hasattr(event, 'amount') :
             self.amount =  event.amount           
 

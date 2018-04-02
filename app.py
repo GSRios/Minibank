@@ -20,7 +20,7 @@ api.add_resource(DepositAccountResource, '/account/<string:account_id>/deposit')
 api.add_resource(WithdrawAccountResource, '/account/<string:account_id>/withdraw')
 api.add_resource(TransactionResource, '/account/<string:account_id>/history')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://user:pass@localhost/minibank'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:za3o5p4r@localhost/minibank'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 

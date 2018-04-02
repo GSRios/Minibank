@@ -1,7 +1,8 @@
 from flask_restful import Resource, reqparse
 from flask import url_for, jsonify
 from model.account.account import Account
-from service import AccountNotFoundException, AccountService
+from service import AccountNotFoundException
+from service import AccountService
 from projection.accountProjection import AccountProjection
 
 class AccountResource(Resource):
@@ -16,9 +17,8 @@ class AccountResource(Resource):
         ) 
 
     def get(self, id):
-        try:            
-            account = self._service.get_account(id)
-            account_projection = AccountProjection(account)
+        try:                       
+            account_projection = AccountProjection(id)
         except AccountNotFoundException as account_not_found:
             return {'Message': str(account_not_found)}, 404
 

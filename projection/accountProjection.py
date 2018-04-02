@@ -1,10 +1,10 @@
-from model.account.account import AccountOpenedEvent
+from store import AccountProjectionModel
 
 class AccountProjection(object):
-    def __init__(self, account):        
+    def __init__(self, account_id):
+        model = AccountProjectionModel.get(account_id)
         projection = {
-            'ID' : account.id,
-            'clientID' : account.clientID,
-            'balance' : sum([event.amount for event in account.events if not isinstance(event, AccountOpenedEvent)])
+            'account_id': model.account_id,            
+            'balance'   : '%.3g'%(model.balance)
         }
         self.projection = projection

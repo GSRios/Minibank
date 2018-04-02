@@ -9,14 +9,12 @@ import json
 import uuid
 
 class ClientService(object):
-    def __init__(self):
-        pass
-
+    
     def process_new_client(self, command):       
         client = Client(uuid.uuid4(), **command)        
         model_client = ClientModel(client)
         model_client.save()
-        EventService.save(client._events)
+        EventService.save_events(client._events)
         return client
     
     def store_client(self, client):

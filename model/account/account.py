@@ -6,11 +6,13 @@ from emailDispatcherEvent import DispatcherEmailEvent
 import datetime
 
 class Account(Composite):
-    def __init__(self, account_id, clientID, account_events=[]):
+    def __init__(self, account_id, client_id, account_events=[]):
         super(Account, self).__init__(account_id, account_events)         
-        self.clientID = clientID   
-        account_opened_event = AccountOpenedEvent(account_id, datetime.datetime.utcnow(), self.get_sequence())
-        self._events.append(account_opened_event)
+        self.client_id = client_id 
+        self._events = account_events
+        if not len(self._events) > 0:  
+            account_opened_event = AccountOpenedEvent(account_id, datetime.datetime.utcnow(), self.get_sequence())
+            self._events.append(account_opened_event)
         
     def deposit(self, amount):
         deposit_event = DepositEvent (self._id, datetime.datetime.utcnow(), self.get_sequence(), amount)

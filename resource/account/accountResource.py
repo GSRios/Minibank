@@ -28,7 +28,7 @@ class AccountResource(Resource):
         data = self._parser.parse_args()
         try:
             account = self._service.proccess_new_account(data.get('clientID'))
-        except Exception:
+        except Exception as e:
             return {'Message' : 'An error ocurred'}, 404
         return url_for('account', id=account._id), 201
         

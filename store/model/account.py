@@ -14,7 +14,7 @@ class AccountModel(_db.Model):
     
     def __init__(self, account):     
        self.id = account._id
-       self.client_id = account.clientID
+       self.client_id = account.client_id
 
     def save(self):
         _db.session.add(self)

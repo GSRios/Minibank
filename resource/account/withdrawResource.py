@@ -16,11 +16,11 @@ class WithdrawAccountResource(Resource):
         ) 
         self.__service = AccountService()
     
-    def post(self, accountID):
+    def post(self, account_id):
         data = self.__parser.parse_args()
         amount = data['amount']
         try:
-            self.__service.proccess_withdraw(amount, accountID)      
+            self.__service.proccess_withdraw(amount, account_id)      
         except ValueError as value_error:
             return {'Message': str(value_error)}, 403
         except AccountNotFoundException as account_not_found:

@@ -9,11 +9,12 @@ class EventModel(_db.Model):
 
     __tablename__ = "event"
 
+    id = _db.Column(_db.UUID(as_uuid=True), default=uuid.uuid4, primary_key=True)
     track_id = _db.Column(_db.UUID(as_uuid=True), default=uuid.uuid4, primary_key=True)
     timestamp = _db.Column(_db.DateTime, default=datetime.datetime.utcnow ,nullable=False)
     sequence = _db.Column(_db.Integer, nullable=False)   
-    type_event = _db.Column(_db.String(70), nullable=False)
-    additional_info = _db.Column(JSON)
+    type = _db.Column(_db.String(70), nullable=False)
+    amount = _db.Column(_db.Float(13,2), nullable=True, default=None)
     
     def __init__(self, event):        
         self.track_id = event._composite_id
@@ -21,9 +22,7 @@ class EventModel(_db.Model):
         self.sequence = event._sequence
         self.type_event = type(event).__name__
         if hasattr(event, 'amount') :
-            self.additional_info = {
-                'amount' : event.amount
-            }
+            self.amount =  event.amount           
 
     def save(self):        
         _db.session.add(self)
@@ -31,5 +30,5 @@ class EventModel(_db.Model):
     
     @classmethod
     def get(cls, track_id):
-        return cls.query.filter_by(id=track_id).first()
+        return cls.query.filter_by(track_id=track_id).all()
 

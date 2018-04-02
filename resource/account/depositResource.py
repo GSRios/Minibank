@@ -17,11 +17,11 @@ class DepositAccountResource(Resource):
             help='This field cannot be empty'
         ) 
     
-    def post(self, accountID):
+    def post(self, account_id):
         data = self.__parser.parse_args()
         amount = data['amount']
         try:
-            self.__service.proccess_deposit(amount, accountID)
+            self.__service.proccess_deposit(amount, account_id)
         except AccountNotFoundException as account_not_found:
             return {'Message': str(account_not_found)}, 404    
         return {"Message":"Transaction completed with success"}

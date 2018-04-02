@@ -3,6 +3,7 @@ from sqlalchemy.dialects.postgresql.base import UUID
 _db.UUID = UUID
 import uuid
 
+
 class ClientModel(_db.Model):
 
     __tablename__ = "client"
@@ -19,11 +20,10 @@ class ClientModel(_db.Model):
         self.name = client._name
         self.email = client._email
 
-    def save(self):        
-        _db.session.add(self)
-        _db.session.commit()
-    
-    @classmethod
-    def get(cls, clientID):
-        return cls.query.filter_by(id=clientID).first()
+    def save(self):
+       _db.session.add(self)
+       _db.session.commit() 
 
+    @classmethod
+    def get(cls, instance_id):
+        return cls.query.filter_by(id=instance_id).first()

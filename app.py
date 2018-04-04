@@ -6,6 +6,7 @@ from resource import TransactionResource
 from resource import AccountResource
 from resource import ClientResource
 from store.database import _db
+from flask_mail import Mail
 
 
 app = Flask(__name__)
@@ -22,7 +23,14 @@ api.add_resource(TransactionResource, '/account/<string:account_id>/history')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://user:pass@localhost/minibank'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'minibank_system@gmail.com'
+app.config['MAIL_PASSWORD'] = '*****'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 
+mail = Mail(app)
 
 @app.before_first_request
 def create_tables():

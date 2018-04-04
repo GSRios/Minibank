@@ -1,3 +1,6 @@
 class MemoryStore(object):
-    store = {}
+    account = {}
+    account_projection = {}
+    client = {}
+    event = {}
     lamport_timestamp = 0

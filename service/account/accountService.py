@@ -7,9 +7,10 @@ from store import AccountModel
 from store import EventModel
 from store import AccountProjectionModel
 from service.event import EventService
-import smtplib
+from flask_mail import Message
 from datetime import datetime
 import decimal
+
 
 class AccountService(object):
     """This class represent the services to account """
@@ -25,10 +26,11 @@ class AccountService(object):
         account = Account(uuid.uuid4(), uuid.UUID(clientID))
         #self.send_email(account)
         account_model = AccountModel(account)
-        account_model.save()
-        EventService.save_events(account._events)
+        account_model.save()       
         projection = AccountProjectionModel(account._id, 0)
         projection.save()
+        self.send_email(account)
+        EventService.save_events(account._events)
         return account
       
     def get_account(self, account_id):
@@ -92,27 +94,12 @@ class AccountService(object):
         return account_domain
 
 
-    def send_email(self, account):
-        timestamp = 0
+    def send_email(self, account):        
         try:
-            user = 'minibank.system@gmail.com'
-            password = 'password'
-            to = 'cfo_email@gmail.com'
-            msg = "\r\n".join([
-                "From: {}".format(user),
-                "To: {}".format(to),
-                "Subject: A new account has been created with this ID: {}".format(account.id),
-                "",
-                "Hello, A new account has been create to the following client {} with this ID {}".format(account.clientID, account.id)
-            ])
-            smtp_server = smtplib.SMTP('smtp.gmail.com:587')
-            smtp_server.ehlo()
-            smtp_server.starttls()
-            smtp_server.login(user, password)
-            timestamp = datetime.now()
-            smtp_server.sendmail(user, to, msg)
-            smtp_server.close()
+           from app import mail            
+           msg = Message('A new account has been created',sender='minibank_system@gmail.com', recipients=['cfo@email']) 
+           msg.body = 'A new account has been created with following number {}'.format(account._id)
+           mail.send(msg)
+           account.sent_email() 
         except Exception as error:
-            raise Exception(error)
-
-        return timestamp
+            raise Exception(error)    

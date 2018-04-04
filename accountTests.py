@@ -1,11 +1,14 @@
 import unittest
-from app import app
-from service import ClientService, AccountService, AccountNotFoundException, ClientNotFoundException
+from app import app as application
+from service import ClientService
+from service import AccountService
+from service import AccountNotFoundException
+from service import ClientNotFoundException
 
 class ClientTest(unittest.TestCase):
 
     def setUp(self):
-        self.app = app.test_client()
+        self.app = application.test_client()
         client_service = ClientService()
         account_service = AccountService()
         command = {

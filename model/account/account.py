@@ -22,5 +22,6 @@ class Account(Composite):
         withdraw_event = WithdrawEvent(self._id, datetime.datetime.utcnow(), self.get_sequence(), amount)         
         self._events.append(withdraw_event)
 
-    def sent_email(self, sent_at):
-        self._events.append(DispatcherEmailEvent(self._id, self.get_sequence, sent_at))
+    def sent_email(self):
+        sent_email_event = DispatcherEmailEvent(self._id, self.get_sequence, sent_at)
+        self._events.append(sent_email_event)
